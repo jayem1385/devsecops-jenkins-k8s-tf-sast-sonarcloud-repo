@@ -14,5 +14,11 @@ pipeline {
 		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=devsecopsshikhar -Dsonar.organization=devsecopsshikhar -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=0846fc4fb99e714cef3ead084f4c46424e1eb8a0'
 		}
 		}
+	    	stage('RunSCAAnalysisUsingSnyk') {
+            steps {		
+				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+					sh 'mvn snyk:test -fn'
+				}
+			}
     }
 }
