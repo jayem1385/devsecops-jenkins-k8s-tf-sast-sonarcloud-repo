@@ -4,22 +4,10 @@ pipeline {
         maven 'maven-3.9.6'
     }
     stages {
-        stage ( "Checkout the Project") {
-            steps {
-                git branch: 'main', url: 'https://github.com/asecurityguru/devsecops-jenkins-k8s-tf-sast-sonarcloud-repo'
-            }
-        }
-		stage ( "Compile and Run Sonar Analysis" ) {
+       	stage ( "Compile and Run Sonar Analysis" ) {
 		steps {
-		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=devsecopsshikhar -Dsonar.organization=devsecopsshikhar -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=0846fc4fb99e714cef3ead084f4c46424e1eb8a0'
-		}
-		}
-	    	stage('RunSCAAnalysisUsingSnyk') {
-            steps {		
-				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-					sh 'mvn snyk:test -fn'
-				}
-			}
+		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=cloudguru -Dsonar.organization=cloudguru -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=f6b0dcc8995fc63efeffb87cbdd76244650572ec'
+	         	}
+	        	}
 		}
     }
-}
